@@ -1,0 +1,11 @@
+download_url = "https://zinc15.docking.org/rings/3h-thieno-2_3-d-pyrimidin-4-one/substances/subsets/for-sale.sdf"
+total = 500000
+per_page = 100
+start_page = 1
+download_dir_name = "Download"
+download_sub_dir_name = "Scaffolds"
+file_prefix = "ZINC_SCAFFOLDS_"
+
+
+# 每次下载的进程数，最好不要超过10
+process_num = 5

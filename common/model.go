@@ -8,5 +8,6 @@ type Config struct {
 	DownloadDirName    string `toml:"download_dir_name"`
 	DownloadSubDirName string `toml:"download_sub_dir_name"`
 	FilePrefix         string `toml:"file_prefix"`
+	FileSuffix         string `toml:"file_suffix"`
 	ProcessNum         int    `toml:"process_num"`
 }

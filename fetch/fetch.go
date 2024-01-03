@@ -80,7 +80,7 @@ func multiFetch(pageList []int) {
 					log.Fatal("Something wrong, retry fetch data, page is:", value)
 				}
 				fileName := fmt.Sprintf(config.FilePrefix+"%d", value)
-				common.SaveContentToSDF(fileName, content)
+				common.SaveContentToFile(fileName, content)
 			}
 		}()
 	}

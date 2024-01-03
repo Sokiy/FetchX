@@ -16,14 +16,20 @@ var (
 	confPath string      = filepath.Join(GetCurrPath(), "config.toml")
 	config   Config      = GetConfig()
 	client   http.Client = InitClient()
-	version  string      = "v0.0.1"
+	version  string      = "v0.0.2"
 )
 
 // DefaultConfig 默认配置
 var DefaultConfig = Config{
-	DownloadUrl:     "https://zinc.docking.org/scaffolds/DWYHDSLIWMUSOO-UHFFFAOYSA-N/",
-	PerPage:         100,
-	DownloadDirName: filepath.Join(GetCurrPath(), "download"),
+	DownloadUrl:        "https://zinc.docking.org/",
+	Total:              0,
+	PerPage:            100,
+	StartPage:          1,
+	DownloadDirName:    "Download",
+	DownloadSubDirName: "SubDir",
+	FilePrefix:         "Prefix",
+	FileSuffix:         "sdf",
+	ProcessNum:         5,
 }
 
 // InitClient 初始化 http client 配置
@@ -72,7 +78,7 @@ func GetReqContent(url string) []byte {
 	var content []byte
 	req, err := client.Get(url)
 	if err != nil {
-		log.Fatal(err)
+		fmt.Println(err)
 		return []byte{}
 	}
 	defer func(Body io.ReadCloser) {
@@ -84,7 +90,7 @@ func GetReqContent(url string) []byte {
 
 	content, err = io.ReadAll(req.Body)
 	if err != nil {
-		log.Fatal(err, "read body error")
+		fmt.Println(err, "read body error")
 		return []byte{}
 	}
 	return content
@@ -162,9 +168,9 @@ func IsDirExist(dirPath string) bool {
 	return err == nil || os.IsExist(err)
 }
 
-// SaveContentToSDF 保存 content 到 sdf 文件中
-func SaveContentToSDF(value string, content []byte) {
-	fileName := fmt.Sprintf("%s.sdf", value)
+// SaveContentToFile 保存 content 到 sdf 文件中
+func SaveContentToFile(value string, content []byte) {
+	fileName := fmt.Sprintf("%s.%s", value, config.FileSuffix)
 	filePath := filepath.Join(config.DownloadDirName, config.DownloadSubDirName, fileName)
 	// 判断文件是否存在
 	if _, err := os.Stat(filePath); err == nil {
