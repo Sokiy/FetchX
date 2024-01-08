@@ -77,7 +77,7 @@ func multiFetch(pageList []int) {
 					time.Sleep(10 * time.Second)
 					// 把索引值重新放入 channel 中
 					syncChan <- value
-					log.Fatal("Something wrong, retry fetch data, page is:", value)
+					fmt.Println("Something wrong, retry fetch data, page is:", value)
 				}
 				fileName := fmt.Sprintf(config.FilePrefix+"%d", value)
 				common.SaveContentToFile(fileName, content)
